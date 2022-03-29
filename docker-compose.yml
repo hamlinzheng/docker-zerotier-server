@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  zerotier:
+    image: zerotier-controller:latest
+    container_name: zerotier-controller
+    build:
+      context: .
+      dockerfile: ./docker/zerotier/Dockerfile
+      args:
+        ZEROTIER_VERSION: 1.8.6
+        # http_proxy: http://172.17.0.1:10809
+        # https_proxy: http://172.17.0.1:10809
+    restart: unless-stopped
+    volumes:
+      - controller_data:/var/lib/zerotier-one
+    expose:
+      - "9994/tcp"
+    ports:
+      - "9994:9993/udp"
+  zero-ui:
+    image: zero-ui:latest
+    container_name: zero-ui
+    build:
+      context: .
+      dockerfile: ./docker/zero-ui/Dockerfile
+      args:
+        ZEROUI_VERSION: 1.2.1
+    restart: unless-stopped
+    depends_on:
+      - zerotier
+    volumes:
+      - controller_data:/var/lib/zerotier-one
+      - zero-ui_data:/app/backend/data
+    environment:
+      - ZU_CONTROLLER_ENDPOINT=http://zerotier:9993/
+      - ZU_SECURE_HEADERS=false
+      - ZU_DEFAULT_USERNAME=admin
+      - ZU_DEFAULT_PASSWORD=zero-ui
+    ports:
+      - "4000:4000"
+
+volumes:
+  controller_data:
+  zero-ui_data:
