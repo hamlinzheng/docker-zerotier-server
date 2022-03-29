@@ -2,8 +2,13 @@ ARG ZEROTIER_VERSION
 FROM zyclonite/zerotier:${ZEROTIER_VERSION}
 
 ARG ZEROTIER_VERSION
+ARG CHINA_SOURCE
 
 COPY ./config/planet* /var/lib/zerotier-one/
+
+## Change source for china
+RUN if [ "${CHINA_SOURCE}" = true ]; then \
+    sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories; fi
 
 ## Auto detect public ipv4 and generate planet file
 RUN apk add --no-cache curl g++ && \

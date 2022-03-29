@@ -9,15 +9,16 @@ services:
       dockerfile: ./docker/zerotier/Dockerfile
       args:
         ZEROTIER_VERSION: 1.8.6
+        CHINA_SOURCE: "true"
         # http_proxy: http://172.17.0.1:10809
         # https_proxy: http://172.17.0.1:10809
     restart: unless-stopped
     volumes:
       - controller_data:/var/lib/zerotier-one
     expose:
-      - "9994/tcp"
+      - "9993/tcp"
     ports:
-      - "9994:9993/udp"
+      - "9993:9993/udp"
   zero-ui:
     image: zero-ui:latest
     container_name: zero-ui
