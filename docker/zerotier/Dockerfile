@@ -4,7 +4,7 @@ FROM zyclonite/zerotier:${ZEROTIER_VERSION}
 ARG ZEROTIER_VERSION
 ARG CHINA_SOURCE
 
-COPY ./config/planet* /var/lib/zerotier-one/
+COPY ./config/identity* /var/lib/zerotier-one/
 
 ## Change source for china
 RUN if [ "${CHINA_SOURCE}" = true ]; then \
@@ -12,8 +12,6 @@ RUN if [ "${CHINA_SOURCE}" = true ]; then \
 
 ## Auto detect public ipv4 and generate planet file
 RUN apk add --no-cache curl g++ && \
-    mv /var/lib/zerotier-one/planet.public /var/lib/zerotier-one/identity.public && \
-    mv /var/lib/zerotier-one/planet.secret /var/lib/zerotier-one/identity.secret && \
     ip=`curl https://ip.3322.net` && addr=${ip}/9993 && identity=`cat /var/lib/zerotier-one/identity.public` && \
     echo "**************************************************************************" && \
     echo "addr: ${addr}" && echo "identity: ${identity}" && \

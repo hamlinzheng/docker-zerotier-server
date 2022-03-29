@@ -8,10 +8,10 @@ services:
       context: .
       dockerfile: ./docker/zerotier/Dockerfile
       args:
-        ZEROTIER_VERSION: 1.8.6
-        CHINA_SOURCE: "true"
-        # http_proxy: http://172.17.0.1:10809
-        # https_proxy: http://172.17.0.1:10809
+        - ZEROTIER_VERSION=1.8.6
+        - CHINA_SOURCE=true
+        # - http_proxy=http://172.17.0.1:10809
+        # - https_proxy=http://172.17.0.1:10809
     restart: unless-stopped
     volumes:
       - controller_data:/var/lib/zerotier-one
@@ -26,7 +26,7 @@ services:
       context: .
       dockerfile: ./docker/zero-ui/Dockerfile
       args:
-        ZEROUI_VERSION: 1.2.1
+        - ZEROUI_VERSION=1.2.1
     restart: unless-stopped
     depends_on:
       - zerotier
