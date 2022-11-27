@@ -11,7 +11,7 @@ RUN if [ "${CHINA_SOURCE}" = true ]; then \
     sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories; fi
 
 ## Auto detect public ipv4 and generate planet file
-RUN apk add --no-cache curl g++ && \
+RUN apk add --no-cache --allow-untrusted curl g++ && \
     ip=`curl https://ip.3322.net` && addr=${ip}/9993 && identity=`cat /var/lib/zerotier-one/identity.public` && \
     echo "**************************************************************************" && \
     echo "addr: ${addr}" && echo "identity: ${identity}" && \

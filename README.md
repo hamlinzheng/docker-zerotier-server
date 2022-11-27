@@ -26,7 +26,7 @@
    $ git clone https://github.com/hamlinzheng/docker-zerotier-server.git
    ```
 
-2. Modify the installation version of `ZeroTier`(default: 1.8.6) and `Zero-UI`(default: 1.2.1) in `docker-compose.yml`
+2. Modify the installation version of `ZeroTier`(default: 1.8.6) and `Zero-UI`(default: 1.2.1) in `docker-compose.yml` (*Optional*)
 
 3. Build the images
 
@@ -40,7 +40,7 @@
    $ docker-compose up -d
    ```
 
-5. Navigate to `http://[PUBLIC_IP]:4000/app/` to config your private ZeroTier service.
+5. Navigate to `http://[PUBLIC_IP]:4000/app/` to config your private ZeroTier service. The default username is `admin` and the default password is `zero-ui`
 
 ### Note:
 
@@ -57,7 +57,7 @@ Download private `planet` file from `http://[PUBLIC_IP]:4000/app/static/planet` 
 ### Linux
 
 ```shell
-$ wget http://[PUBLIC_IP]:4000/app/static/planet -O /var/lib/zerotier-one/planet
+$ sudo wget http://[PUBLIC_IP]:4000/app/static/planet -O /var/lib/zerotier-one/planet
 $ sudo systemctl restart zerotier-one.service
 ```
 
@@ -73,11 +73,22 @@ See [kaaass](https://github.com/kaaass)/**[ZerotierFix](https://github.com/kaaas
 
 Replace the planet file in the `/etc/config/zero` path and restart the `ZeroTier` service with `$ /etc/init.d/zerotier restart`
 
+### Synology and docker
+TODO (https://docs.zerotier.com/devices/synology/)
+
+### How to verify 
+
+Use `sudo zerotier-cli peers` command to check whether your server ip is in the `PLANET` list.
+
+Use `zerotier-cli join` command to join your private network.
+
+
 
 
 ## TODO
 
 - [ ] Optimize the docker image size of zero-ui
+- [ ] Support multiple Planet
 - [ ] Support IPv6
 - [ ] Support domain
 
@@ -89,10 +100,3 @@ Replace the planet file in the `/etc/config/zero` path and restart the `ZeroTier
 - [dec0dOS](https://github.com/dec0dOS)/**[zero-ui](https://github.com/dec0dOS/zero-ui)**
 - [sbilly](https://github.com/sbilly)/**[docker-zerotier-controller](https://github.com/sbilly/docker-zerotier-controller)**
 - [opopop880](https://gitee.com/opopop880)/**[zerotier_planet](https://gitee.com/opopop880/zerotier_planet)**
-
-
-
-
-
-
-
