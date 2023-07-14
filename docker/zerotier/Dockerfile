@@ -23,6 +23,7 @@ RUN apk add --no-cache --allow-untrusted curl g++ && \
     sed -i '85i roots.push_back(World::Root());' ./mkworld.cpp && \
     sed -i '86i roots.back().identity = Identity(\"'"$identity"'\");' ./mkworld.cpp && \
     sed -i '87i roots.back().stableEndpoints.push_back(InetAddress(\"'"$addr"'\"));' ./mkworld.cpp && \
+    sed -i 's|^c++ |c++ -I../../ext |g' build.sh && \
     sh ./build.sh && ./mkworld && mv ./world.bin /var/lib/zerotier-one/planet && \
     apk del curl g++ && rm -rf /var/cache/apk/* && rm -rf /root/.cache && rm -rf /tmp/*
 
